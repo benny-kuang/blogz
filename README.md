@@ -2,7 +2,7 @@
 http://education.launchcode.org/web-fundamentals/assignments/blogz
 - Flask based app implements blog.  
 - Builds upon build-a-blog assignment.  Refactor to expand our codebase to make this a multi-user blog site.  Add authentication, users will have own blog pages, vistors can view blogs by authors, or view all blog posts on the site.  We will still maintain the ability to view individual blog entry.
-# Overview of Improvements
+ # Changes to Build A Blog
 - Add following templates: signup.html, login.html, index.html
 - Add a singleUser.html template that will be used to display only the blogs associated with a single given author. It will be used when we dynamically generate a page using a GET request with a user query parameter on the /blog route (similar to how we dynamically generated individual blog entry pages in the last assignment).
 - Add the following route handler functions: signup, login, and index.
@@ -19,4 +19,24 @@ After adding user class, adding login and signup pages, adding logout function a
 - Create Dynamic User Pages
 # Bonus Missions
 - Add Pagination
-- Add Hashing
+- Add Hashing 
+# User Scenarios
+## Scenario A: Not Logged In
+- **Given** Anonymous Visitor (not logged in)
+- **When** Arrive at the site (route "/")
+- **Then** See list of blog users
+    - **If** Visitor clicks All Posts
+         - **Then** See list of previous posts by registered users
+    - **If** Visitor clicks New Post
+        **Then** Visitor is redirected to Log In page
+    - **If** Visitor clicks Log In
+        -**And** Arrive at Login Page
+         
+## Scenario B: Logged In
+- **Given** Registerd User (logged in)
+- **When** Arrive at the site (route "/")
+- **Then** See list of previous blog entries by registered users
+### Menus Available on Nav
+- Home, New Post, Log Out
+
+
