@@ -31,12 +31,11 @@ After adding user class, adding login and signup pages, adding logout function a
         **Then** Visitor is redirected to Log In page
     - **If** Visitor clicks Log In
         -**And** Arrive at Login Page
-         
+ 
 ## Scenario B: Logged In
 - **Given** Registerd User (logged in)
 - **When** Arrive at the site (route "/")
 - **Then** See list of previous blog entries by registered users
-### Menus Available on Nav
-- Home, New Post, Log Out
+
 
 
