@@ -1,10 +1,12 @@
 from app import *
 from models import *
     
+# TODO Rewrite to be home page    
 @app.route('/', methods=['GET'])
 def index():
     return redirect('/blog')
 
+# TODO Rewrite to be all blog posts by all users
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
     posted_blog = Blog.query.all()
@@ -39,6 +41,7 @@ def new_blog():
             return redirect('/blog')
     return render_template("newpost.html", title="New Post")
 
+# TODO Create Login and Logout routes
 
 if __name__ == '__main__':
     app.run()
