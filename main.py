@@ -10,7 +10,8 @@ Require login'''
 # TODO Rewrite to be home page    
 @app.route('/', methods=['GET'])
 def index():
-    return redirect('/blog')
+    return redirect('/login')
+
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
@@ -19,6 +20,7 @@ def signup():
         password = request.form['password']
         verify = request.form['verify']
 
+# Error prompts
         error = validate(username, password, verify)
         if error[0] or error[1] or error[2]:
             if error[0] != "":
@@ -28,6 +30,7 @@ def signup():
             if error[2] != "":
                 flash(error[2], 'error')
             return render_template("signup.html", username=username)
+        #if no errors and user is not already in database, new user added to db and logged in
         else:
             user = User.query.filter_by(username=username).first()
             if not user:
@@ -40,23 +43,33 @@ def signup():
                 flash('Username already in use', 'error')
     return render_template('signup.html')
         
-'''
-# # TODO Create Login and Logout routes
-# @app.route('/login', methods=['POST', 'GET'])
-# def login():
-
-#     if request.method == 'POST':
+# TODO Create Login and Logout routes
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+        if user and password:
+            session['user'] = user.username
+            flash("Logged in", "success")
+            return redirect('/login')
+        else:
+            flash('Username or Password Incorrect', 'error')
+    return render_template('login.html')
 
 # # TODO Create logout routes
-# @app.route('logout', methods=['GET', 'POST'])
-# def logout():
-
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    if 'user' in session:
+        del session['user']
+    return redirect('/login')
+'''
 # # TODO Rewrite to be all blog posts by all users
 # # Displays all blogs in database, or just specific post if an ID is passed as GET
 # @app.route('/blog', methods=['POST', 'GET'])
 # def blog_postings():
-'''
-'''
+
 This is similar to what is above
 @app.route('/selected_post', methods=['GET'])
 def selected_post():
