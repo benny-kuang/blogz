@@ -9,7 +9,7 @@ def require_login():
     if request.endpoint not in allowed_routes and 'user' not in session:
         return redirect('/login')
 
-# TODO Rewrite to be home page    
+# TODO Rewrite to be home page, for now it just redirects to login    
 @app.route('/', methods=['GET'])
 def index():
     return redirect('/login')
@@ -86,11 +86,14 @@ def selected_post():
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_post():
+    if 'user' not in session:
+        return redirect('/login')
     if request.method == 'POST':
         #display errors for if no input in title or body
+        owner = User.query.filter_by(username=session['user']).first()
         post_title = request.form['title']
         post_body = request.form['body']
-        new_post = Blog(post_title, post_body)
+        new_post = Blog(post_title, post_body, owner)
         if not post_title and not post_body:
             flash ("Please type title and stuff in body")
             return render_template("newpost.html", title="New Post")
