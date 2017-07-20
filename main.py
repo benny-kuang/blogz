@@ -3,9 +3,11 @@ from models import *
 '''Restrict and redirect user to signup or login if trying to post w/o being logged in
 Require login'''
 # # TODO Require login
-# @app.before_request
-# def require_login():
-#     allowed_routes = ['signup', 'login', 'blog_postings']
+@app.before_request
+def require_login():
+    allowed_routes = ['signup', 'login']
+    if request.endpoint not in allowed_routes and 'user' not in session:
+        return redirect('/login')
 
 # TODO Rewrite to be home page    
 @app.route('/', methods=['GET'])
