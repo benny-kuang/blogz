@@ -5,15 +5,33 @@ Require login'''
 # # TODO Require login
 @app.before_request
 def require_login():
-    allowed_routes = ['signup', 'login']
+    allowed_routes = ['index', 'blog', 'signup', 'login']
     if request.endpoint not in allowed_routes and 'user' not in session:
         return redirect('/login')
 
-# TODO Rewrite to be home page, for now it just redirects to login    
+# Homepage displays all users. Clicking User will redirect to posts made by that user
 @app.route('/', methods=['GET'])
 def index():
-    return redirect('/login')
+    users = User.query.all()
+    return render_template('index.html', users=users)
 
+'''
+# # TODO Rewrite to be all blog posts by all users
+# # Displays all blogs in database, or just specific post if an ID is passed as GET
+# @app.route('/blog', methods=['POST', 'GET'])
+# def blog_postings():
+
+This is similar to what is above
+@app.route('/selected_post', methods=['GET'])
+def selected_post():
+    blog_id = request.args.get('id')
+    blog_post = Blog.query.filter_by(id=blog_id).first()
+    return render_template('selectedpost.html', selected_post = selected_post)
+'''
+
+# # TODO Display all blog posts written by specific user
+# @app.route('/singleuser')
+# def singleuser():
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
@@ -66,23 +84,6 @@ def logout():
     if 'user' in session:
         del session['user']
     return redirect('/login')
-'''
-# # TODO Rewrite to be all blog posts by all users
-# # Displays all blogs in database, or just specific post if an ID is passed as GET
-# @app.route('/blog', methods=['POST', 'GET'])
-# def blog_postings():
-
-This is similar to what is above
-@app.route('/selected_post', methods=['GET'])
-def selected_post():
-    blog_id = request.args.get('id')
-    blog_post = Blog.query.filter_by(id=blog_id).first()
-    return render_template('selectedpost.html', selected_post = selected_post)
-'''
-
-# # TODO Display all blog posts written by specific user
-# @app.route('/singleuser')
-# def singleuser():
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_post():
@@ -106,6 +107,7 @@ def new_post():
         else:
             db.session.add(new_post)
             db.session.commit()
+            # TODO: Redirect to page with newly posted individual blog
             return redirect('/blog')
     return render_template("newpost.html", title="New Post")
 
