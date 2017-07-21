@@ -1,8 +1,7 @@
 from app import *
 from models import *
-'''Restrict and redirect user to signup or login if trying to post w/o being logged in
-Require login'''
-# # TODO Require login
+# Restrict and redirect user to signup or login if trying to post w/o being logged in
+# Require login
 @app.before_request
 def require_login():
     allowed_routes = ['index', 'blog', 'signup', 'login']
@@ -16,18 +15,24 @@ def index():
     return render_template('index.html', users=users)
 
 
-# TODO Rewrite to be all blog posts by all users
+# TODO Include pagination and dating of posts
 # Displays all blogs in database, or just specific post if an ID is passed as GET
 @app.route('/blog', methods=['POST', 'GET'])
 def blog_postings():
+    # if query is id or user (blog?id=) or (blog?user=)
+    post_id = request.args.get('id')
+    user_id = request.args.get('user')
+    # This selects individual post
+    if post_id:
+        posts = Blog.query.filter_by(id=[post_id]).all()
+        return render_template("blog.html", posts=posts)
+    # This selects all posts by a given user
+    if user_id:
+        posts = Blog.query.filter_by(owner_id = user_id).all()
+        return render_template("singleUser.html", posts=posts)
+    # Default view: All blog posts by all users
     posts = Blog.query.all()
-
     return render_template("blog.html", posts=posts)
-
-
-# # TODO Display all blog posts written by specific user
-# @app.route('/singleuser')
-# def singleuser():
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
@@ -66,6 +71,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
+        password = User.query.filter_by(password=password).first()
         if user and password:
             session['user'] = user.username
             flash("Logged in", "success")
