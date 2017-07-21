@@ -12,11 +12,13 @@ http://education.launchcode.org/web-fundamentals/assignments/blogz
     - ~~Add a User class~~
     - ~~Add a logout function~~
         - ~~Handles a POST request to /logout and redirects user to /blog after deleting user from session~~
-- Create Dynamic User Pages
+- ~~Create Dynamic User Pages~~
     - Add a singleUser.html template that will be used to display only the blogs associated with a single given author. It will be used when we dynamically generate a page using a GET request with a user query parameter on the /blog route (similar to how we dynamically generated individual blog entry pages in the last assignment).
 # Bonus Missions
 - Add Pagination
-- Add Hashing 
+- Add Hashing
+- Add Date timestamps to posts
+- Add CSS Styling, Bootstrap 
 # User Scenarios
 ## Scenario A: Not Logged In
 - **Given** Anonymous Visitor (not logged in)
