@@ -2,7 +2,7 @@
 http://education.launchcode.org/web-fundamentals/assignments/blogz
 - Flask based app implements blog.  
 - Builds upon build-a-blog assignment.  Refactor to expand our codebase to make this a multi-user blog site.  Add authentication, users will have own blog pages, vistors can view blogs by authors, or view all blog posts on the site.  We will still maintain the ability to view individual blog entry.
- # Changes to Build A Blog
+ # Changes to Build A Blog Checklist
 - ~~Make a Home Page ("/")~~
     - Display all blog users
     - Use index.html template
@@ -73,7 +73,7 @@ http://education.launchcode.org/web-fundamentals/assignments/blogz
         - **If** User does not input content into title or body forms and clicks submit
             - **Then** Redirected to _"/newpost"_ with error message that need to put content into title or body forms
     - **If** User clicks Login ("_/login_")
-        - **Then** TBD
+        - **Then** Redirect to "_/blog_"
     - **If** User clicks Log Out ("_/logout_")
         - **Then** Redirect to "_/blog_"
 

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>{{selected_post.title}}</h2>
-<p>{{selected_post.body}}</h2>
-
+<h3>{{blog.title}}</h3>
+<p><a href="/singleuser?id={{blog.owner.id}}">{{selected_post.body}}</a></p>
+<p>{{blog.post}}</p>
 {% endblock %}

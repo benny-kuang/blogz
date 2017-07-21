@@ -15,19 +15,15 @@ def index():
     users = User.query.all()
     return render_template('index.html', users=users)
 
-'''
-# # TODO Rewrite to be all blog posts by all users
-# # Displays all blogs in database, or just specific post if an ID is passed as GET
-# @app.route('/blog', methods=['POST', 'GET'])
-# def blog_postings():
 
-This is similar to what is above
-@app.route('/selected_post', methods=['GET'])
-def selected_post():
-    blog_id = request.args.get('id')
-    blog_post = Blog.query.filter_by(id=blog_id).first()
-    return render_template('selectedpost.html', selected_post = selected_post)
-'''
+# TODO Rewrite to be all blog posts by all users
+# Displays all blogs in database, or just specific post if an ID is passed as GET
+@app.route('/blog', methods=['POST', 'GET'])
+def blog_postings():
+    posts = Blog.query.all()
+
+    return render_template("blog.html", posts=posts)
+
 
 # # TODO Display all blog posts written by specific user
 # @app.route('/singleuser')
