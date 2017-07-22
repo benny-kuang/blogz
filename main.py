@@ -74,8 +74,8 @@ def login():
         password = User.query.filter_by(password=password).first()
         if user and password:
             session['user'] = user.username
-            flash("Logged in", "success")
-            return redirect('/login')
+            flash("Logged in", 'success')
+            return redirect('/newpost')
         else:
             flash('Username or Password Incorrect', 'error')
     return render_template('login.html')
@@ -98,13 +98,13 @@ def new_post():
         post_body = request.form['body']
         new_post = Blog(post_title, post_body, owner)
         if not post_title and not post_body:
-            flash ("Please type title and stuff in body")
+            flash ("Please type title and stuff in body", 'error')
             return render_template("newpost.html", title="New Post")
         if not post_title:
-            flash ("Please type a title")
+            flash ("Please type a title", 'error')
             return render_template("newpost.html", title="New Post")
         if not post_body:
-            flash ("Please type stuff in body")
+            flash ("Please type stuff in body", 'error')
             return render_template("newpost.html", title="New Post")
         else:
             db.session.add(new_post)

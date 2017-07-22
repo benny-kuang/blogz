@@ -5,7 +5,7 @@
 <h1>Login</h1>
 {% with messages = get_flashed_messages(with_categories=True) %}
 {% for category, messages in messages %}
-<div><p class="{{category}}">{{messages}}</p></div>
+<p class="{{category}}">{{messages}}</p>
 {% endfor %} 
 {% endwith %}
 <form action='/login' method='post'>

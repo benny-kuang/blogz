@@ -1,3 +1,6 @@
 .error {
-    color: red;
+    color:Red;
+}
+.success {
+    color:Green;
 }

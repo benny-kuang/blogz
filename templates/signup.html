@@ -4,7 +4,7 @@
     <h1>Sign Up</h1>
     {% with messages = get_flashed_messages(with_categories=True) %}
     {% for category, messages in messages %}
-    <div class="error"><p class="{{category}}">{{messages}}</p></div>
+    <p class="{{category}}">{{messages}}</p>
     {% endfor %} 
     {% endwith %}
     <form action='/signup' method='post'>
