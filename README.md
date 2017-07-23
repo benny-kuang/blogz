@@ -19,6 +19,7 @@ http://education.launchcode.org/web-fundamentals/assignments/blogz
 - ~~Add Hashing~~
 - Add Date timestamps to posts
 - Add CSS Styling, Bootstrap 
+- Add and Implement Flask Login module: https://flask-login.readthedocs.io/en/latest/
 # User Scenarios
 ## Scenario A: Not Logged In
 - **Given** Anonymous Visitor (not logged in)
