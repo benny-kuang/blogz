@@ -1,5 +1,6 @@
 from app import *
 from models import *
+from hashutils import *
 # Restrict and redirect user to signup or login if trying to post w/o being logged in
 # Require login
 @app.before_request
@@ -71,9 +72,9 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
-        password = User.query.filter_by(password=password).first()
-        if user and password:
+        if user and check_pw_hash(password, user.pw_hash):
             session['user'] = user.username
+            session['id'] = user.id
             flash("Logged in", 'success')
             return redirect('/newpost')
         else:

@@ -1,4 +1,5 @@
 from app import *
+from hashutils import *
 
 # stores all the blog posts
 class Blog(db.Model):
@@ -18,12 +19,12 @@ class Blog(db.Model):
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), unique=True)
-    password = db.Column(db.String(120))
+    pw_hash = db.Column(db.String(600))
     posts = db.relationship('Blog', backref='owner')
 
     def __init__(self, username, password):
         self.username = username
-        self.password = password
+        self.pw_hash = make_pw_hash(password)
 
 # used for signup verification
 def validate(username, password, verify):
