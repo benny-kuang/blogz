@@ -16,7 +16,7 @@ http://education.launchcode.org/web-fundamentals/assignments/blogz
     - Add a singleUser.html template that will be used to display only the blogs associated with a single given author. It will be used when we dynamically generate a page using a GET request with a user query parameter on the /blog route (similar to how we dynamically generated individual blog entry pages in the last assignment).
 # Bonus Missions
 - Add Pagination
-- Add Hashing
+- ~~Add Hashing~~
 - Add Date timestamps to posts
 - Add CSS Styling, Bootstrap 
 # User Scenarios
