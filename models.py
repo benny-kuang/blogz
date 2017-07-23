@@ -11,8 +11,11 @@ class Blog(db.Model):
     pub_date = db.Column(db.DateTime)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 2
     def __init__(self, title, body, owner, pub_date=None):
         self.title = title
         self.body = body
