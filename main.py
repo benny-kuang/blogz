@@ -29,10 +29,10 @@ def blog_postings():
         return render_template("blog.html", posts=posts)
     # This selects all posts by a given user
     if user_id:
-        posts = Blog.query.filter_by(owner_id = user_id).all()
+        posts = Blog.query.filter_by(owner_id = user_id).order_by(Blog.pub_date.desc()).all()
         return render_template("singleUser.html", posts=posts)
     # Default view: All blog posts by all users
-    posts = Blog.query.all()
+    posts = Blog.query.order_by(Blog.pub_date.desc()).all()
     return render_template("blog.html", posts=posts)
 
 @app.route('/signup', methods=['POST', 'GET'])

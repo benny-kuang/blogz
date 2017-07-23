@@ -1,5 +1,6 @@
 from app import *
 from hashutils import *
+from datetime import datetime
 
 # stores all the blog posts
 class Blog(db.Model):
@@ -7,13 +8,18 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.String(500))
+    pub_date = db.Column(db.DateTime)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
-    def __init__(self, title, body, owner):
+
+    def __init__(self, title, body, owner, pub_date=None):
         self.title = title
         self.body = body
         self.owner = owner
+        if pub_date is None:
+            pub_date = datetime.utcnow()
+        self.pub_date = pub_date
 
 # stores all users
 class User(db.Model):
