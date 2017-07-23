@@ -8,6 +8,6 @@
     {% for post in posts %}
         <h2><a href="./blog?id={{post.id}}">{{post.title}}</a></h2>
         <p>{{post.body}}</p>
-        <p><a href="./blog?user={{post.owner.id}}">{{post.owner.username}}</a></p>
+        <p>Posted by <a href="./blog?user={{post.owner.id}}">{{post.owner.username}}</a> on {{post.pub_date}}</p>
     {% endfor %}    
 {% endblock %}

@@ -17,7 +17,7 @@ http://education.launchcode.org/web-fundamentals/assignments/blogz
 # Bonus Missions
 - Add Pagination
 - ~~Add Hashing~~
-- Add Date timestamps to posts
+- ~~Add Date timestamps to posts~~
 - Add CSS Styling, Bootstrap 
 - Add and Implement Flask Login module: https://flask-login.readthedocs.io/en/latest/
 # User Scenarios
