@@ -5,7 +5,7 @@ from hashutils import *
 # Require login
 @app.before_request
 def require_login():
-    allowed_routes = ['index', 'blog', 'signup', 'login']
+    allowed_routes = ['index', 'blog_postings', 'signup', 'login']
     if request.endpoint not in allowed_routes and 'user' not in session:
         return redirect('/login')
 
