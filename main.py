@@ -2,12 +2,18 @@ from app import *
 from models import *
 from hashutils import *
 
-# TODO Fix it so that anonymous users cannot access new post page unless logged in
-
+# Loads user into a session
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(id)
 
+# This redirects anonymous to login when they try to go to the New Post page
+@login_manager.unauthorized_handler
+def unauthorized():
+    flash('Please login in order to post', 'error' )
+    return redirect('/login')
+
+# The homepage displays all the users
 @app.route('/', methods=['GET'])
 def index():
     users = User.query.all()
@@ -74,20 +80,20 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and check_pw_hash(password, user.pw_hash):
             login_user(user)
-            print("I am logged in")
             flash("Logged in", 'success')
             return redirect(url_for('new_post'))
         else:
             flash('Username or Password Incorrect', 'error')
     return render_template('login.html')
 
-# # TODO Create logout routes
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     logout_user()
+    flash("Logged out", "success")
     return redirect('/login')
 
-@app.route('/newpost', methods=['POST', 'GET'])
+@app.route('/newpost', methods=['GET', 'POST'])
+@login_required
 def new_post():
     if request.method == 'POST':
         #display errors for if no input in title or body
