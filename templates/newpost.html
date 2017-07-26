@@ -7,15 +7,19 @@
     <p class="{{category}}">{{messages}}</p>
     {% endfor %} 
     {% endwith %}
+    <div>
     <form method="post">
         <label>
             <div>Title:</div>
             <input type="text" name="title"/>
         </label>
+    </div>
+    <div>
         <label>
             <div>Body:</div>
             <textarea name="body" rows="10" cols="50">{{body}}</textarea>
         </label>
+    </div>
     <div><input type="submit"></div>
 
     </form>

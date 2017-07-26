@@ -1,15 +1,13 @@
 from app import *
 from models import *
 from hashutils import *
-# Restrict and redirect user to signup or login if trying to post w/o being logged in
-# Require login
-@app.before_request
-def require_login():
-    allowed_routes = ['index', 'blog_postings', 'signup', 'login']
-    if request.endpoint not in allowed_routes and 'user' not in session:
-        return redirect('/login')
 
-# Homepage displays all users. Clicking User will redirect to posts made by that user
+# TODO Fix it so that anonymous users cannot access new post page unless logged in
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(id)
+
 @app.route('/', methods=['GET'])
 def index():
     users = User.query.all()
@@ -20,6 +18,7 @@ def index():
 # Displays all blogs in database, or just specific post if an ID is passed as GET
 @app.route('/blog', methods=['POST', 'GET'])
 def blog_postings():
+    
     # if query is id or user (blog?id=) or (blog?user=)
     post_id = request.args.get('id')
     user_id = request.args.get('user')
@@ -59,7 +58,8 @@ def signup():
                 new_user = User(username, password)
                 db.session.add(new_user)
                 db.session.commit()
-                session['user'] = new_user.username
+                login_user(new_user)
+                flash('User successfully registered', 'success')
                 return redirect('/signup')
             else:
                 flash('Username already in use', 'error')
@@ -73,10 +73,10 @@ def login():
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
         if user and check_pw_hash(password, user.pw_hash):
-            session['user'] = user.username
-            session['id'] = user.id
+            login_user(user)
+            print("I am logged in")
             flash("Logged in", 'success')
-            return redirect('/newpost')
+            return redirect(url_for('new_post'))
         else:
             flash('Username or Password Incorrect', 'error')
     return render_template('login.html')
@@ -84,17 +84,14 @@ def login():
 # # TODO Create logout routes
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    if 'user' in session:
-        del session['user']
+    logout_user()
     return redirect('/login')
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_post():
-    if 'user' not in session:
-        return redirect('/login')
     if request.method == 'POST':
         #display errors for if no input in title or body
-        owner = User.query.filter_by(username=session['user']).first()
+        owner = User.query.filter_by(id=current_user.id).first()
         post_title = request.form['title']
         post_body = request.form['body']
         new_post = Blog(post_title, post_body, owner)

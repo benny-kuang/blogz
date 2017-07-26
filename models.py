@@ -19,13 +19,13 @@ class Blog(db.Model):
             pub_date = datetime.utcnow()
         self.pub_date = pub_date
 
-# stores all users
-class User(db.Model):
+# stores all users, flask_login.UserMixin
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), unique=True)
     pw_hash = db.Column(db.String(600))
     posts = db.relationship('Blog', backref='owner')
-
+    login_manager.login_view = "/newpost"
     def __init__(self, username, password):
         self.username = username
         self.pw_hash = make_pw_hash(password)
